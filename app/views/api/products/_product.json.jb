@@ -4,7 +4,7 @@
   name: product.name,
   price: product.price,
   tax: product.tax,
-  images: product.images,
+  images: product.images.map { |image| render partial: "api/images/image.json.jb", locals: {image: image}},
   description: product.description,
   is_discounted: product.is_discounted?,
   supplier_name: product.supplier.name,

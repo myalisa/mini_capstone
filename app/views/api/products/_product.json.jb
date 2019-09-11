@@ -4,8 +4,9 @@
   name: product.name,
   price: product.price,
   tax: product.tax,
-  image_url: product.image_url,
+  images: product.images,
   description: product.description,
-  is_discounted: product.is_discounted?
-
+  is_discounted: product.is_discounted?,
+  supplier_name: product.supplier.name,
+  supplier: (render partial: "api/suppliers/supplier.json.jb", locals: {supplier: product.supplier})
 }

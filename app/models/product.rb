@@ -8,8 +8,17 @@ class Product < ApplicationRecord
   validates :description, presence: true
   validates :image_url, presence: true
   
+
+  def supplier
+    Supplier.find_by(id: self.supplier_id)
+  end
+
+ def images
+  Image.where(product_id: self.id)
+ end
+  
   def is_discounted?
-    price < 200000
+    price < 2.00
   end
 
   def tax

@@ -1,30 +1,19 @@
 class Api::OrdersController < ApplicationController
-  def index
-    if current_user
-      @orders = current_user.orders
-      render 'index.json.jb'
-    else
-      render json: []
-    end
+  before_action :authenticate_user, only: [:index, :create]
 
+  def index
+    @orders = current_user.orders
+    render 'index.json.jb'
   end
 
   def create
-    quantity = params[:quantity].to_i
-    product = Product.find(params[:product_id])
-    subtotal = product.price * quantity
-    tax = subtotal * 0.09
-    total = tax + subtotal
-    
+    # carted_products.where (current_user: id, status: carted)        How you write this???
+    # subtotal = Product.find_by(id: ).price 
     @order = Order.new(
-      user_id: current_user.id,
-      product_id: params[:product_id],
-      quantity: params[:quantity],
-      subtotal: product.price * quantity,
-      tax: tax,
-      total: total
-
-    )
+                      user_id: current_user.id,
+                      subtotal:
+                      
+                      )
     if @order.save
       render 'show.json.jb'
     else

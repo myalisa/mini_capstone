@@ -1,4 +1,7 @@
  class Api::ProductsController < ApplicationController
+  before_action :authenticate_admin, only: [:create, :update, :destroy]
+
+
   def index
     @products = Product.all
 
@@ -6,6 +9,16 @@
     discount_option = params[:discount] 
     sort_attribute = params[:sort]
     sort_order = params[:sort_order]
+    category_preference = params[:category]
+    discount_level = 2
+
+    if category_preference
+      category = Category.find_by(name: category_preference)
+      @products = category.products
+
+    else
+      @products = Product.all
+    end
 
 
     if search_term
@@ -37,7 +50,8 @@
     @product = Product.new(
                           name: params[:name],
                           price: params[:price],
-                          description: params[:description]
+                          description: params[:description],
+                          supplier_id: params[:supplier_id]
                           )
 
     if @product.save

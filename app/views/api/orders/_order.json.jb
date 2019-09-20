@@ -1,8 +1,8 @@
 {
   id: order.id,
-  user_id: (render partial: "api/users/user.json.jb", locals: {user: order.user}),
-  product: (render partial: "api/products/product.json.jb", locals: {product: order.product}), 
-  quantity: order.quantity,
+  user: (render partial: "api/users/user.json.jb", locals: {user: order.user}),
+  carted_products: order.carted_products.map { |carted_product|
+    render partial: "api/carted_products/carted_product.json.jb", locals: {carted_product: carted_product}},
   subtotal: order.subtotal,
   tax: order.tax,
   total: order.total

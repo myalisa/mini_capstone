@@ -2,8 +2,11 @@ class Product < ApplicationRecord
   belongs_to :supplier
   has_many :images
   has_many :product_categories
-  has_many :products, through: :product_categories
+  has_many :categories, through: :product_categories
+
+  has_many :carted_products
   has_many :orders, through: :carted_products
+
 
   validates :name, presence: true
   validates :name, uniqueness: true
@@ -19,7 +22,7 @@ class Product < ApplicationRecord
   end
 
   def category_names
-    self.categories.map {|category| category.name }
+    self.categories.map { |category| category.name }
   end
 
   def tax
